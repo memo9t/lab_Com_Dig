@@ -1,0 +1,144 @@
+\documentclass[letter,12pt]{article}
+\usepackage[paperheight=27.94cm,paperwidth=21.59cm,bindingoffset=0in,left=3cm,right=2.0cm, top=3.5cm,bottom=2.5cm, headheight=200pt, headsep=1.0\baselineskip]{geometry}
+\usepackage{graphicx,lastpage}
+\usepackage{upgreek}
+\usepackage{censor}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{pdfpages}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{rotating}
+\usepackage{multirow}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{minted}
+\renewcommand{\tablename}{Tabla}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+
+%
+\begin{document}
+%
+   \title{\Huge{Laboratorio 1: Pulse Amplitude Modulation (PAM) y Pulse Code Modulation (PCM)}}
+
+   \author{\textbf{Sección 02} \\\textbf{Grupo LaTriada}  \\Diego Martin \\Bruno Rosales \\Guillermo Carreño \\ \\ Profesor: Marcos Fantoval}
+          
+   \date{Abril de 2025}
+
+   \maketitle
+   
+   \tableofcontents
+ 
+  \newpage
+  
+
+\section{Introducción}
+El laboratorio consiste en distintas formas de codificar ondas analógicas dentro de señales digitales de banda base. Mediante el procesamiento de señales que ofrece Matlab se modularán señales utilizando la modulación de amplitud (PAM) natural e instantánea. También se trabajará con la transformada de Fourier de la señal original muestreada de manera natural e instantánea y se realizará modulación por pulsos codificados o PCM.
+
+\section{Metodología}
+De manera que se pueda resolver el laboratorio, se llevan a cabo las actividades previas, en donde se definen las siguientes variables de una señal sinusoidal moduladora de amplitud 1.
+
+\begin{itemize}
+    \item \textit{fc} = 1000 [Hz]
+    \item \textit{t} = (0:1e-05:5/1000)'
+    \item \textit{y} = sin( 2 * $\pi$ * \textit{fc} * \textit{t})
+\end{itemize}
+
+Dado que Matlab no puede procesar señales análogas, se considera que la señal sinusoidal tiene muestras cada 1/100000 segundos y se deja como un parámetro configurable que se ingresa por consola al momento de ejecutar el código.
+
+
+Utilizando la señal generada anteriormente, se le aplica una modulación por amplitud de pulso con muestreo instantáneo y una modulación por amplitud de pulso con muestreo natural, y se grafican las tres señales (original, muestreo instantáneo y muestreo natural).
+
+Una vez aplicadas las distintas modulaciones PAM se debe realizar una Modulación por Pulsos Codificados o PCM de la señal muestreada de forma instantánea.
+\clearpage
+\section{Resultados y Análisis}
+
+\subsection{Señal Original y Modulación PAM}
+Para la primera parte se genera la señal original y luego se le aplica PAM instantáneo y PAM natural.
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=15cm]{Imagenes/PAM.png}
+        \label{fig:a1}
+        \caption{Señal Original y PAM.}
+\end{figure}
+
+El muestreo natural toma segmentos de la señal mediante pulsos de corta duración que siguen su forma, conservando mejor la información analógica. En cambio, el muestreo instantáneo toma valores puntuales representados por pulsos breves y constantes, lo cual simplifica el procesamiento digital pero reduce la fidelidad. Luego se grafican las 3 señales en un mismo gráfico.
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=15cm]{Imagenes/3senales.png}
+        \label{fig:a1}
+        \caption{Señal Original (Rojo), PAM Instantáneo (Verde) y PAM Natural (Azul).}
+\end{figure}
+
+Visualmente se aprecia que el PAM natural aproxima de forma más continua a la señal original, mientras que el instantáneo proporciona solo valores puntuales. Esta gráfica resalta las diferencias clave entre fidelidad de representación (natural) y simplicidad de implementación (instantáneo).
+
+\subsection{Transformadas de Fourier}
+Una vez graficadas las señales con modulación PAM, se procede a aplicar la transformada de Fourier a las distintas señales, mostrando solo la parte positiva del gráfico de las transformadas de Fourier
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=15cm]{Imagenes/Fourier.png}
+        \label{fig:a1}
+        \caption{Transformadas de Fourier.}
+\end{figure}
+
+Se observa cómo la modulación PAM introduce réplicas del espectro original. Tanto el PAM natural como el instantáneo distribuyen la energía, generando componentes en distintos puntos de la gráfica, lo cual puede afectar el ancho de banda requerido y el filtrado posterior.
+
+\subsection{PCM}
+En esta parte de la actividad se graficara una modulación por pulsos codificados o PCM de la señal con la que se ha estado trabajando.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=15cm]{Imagenes/Screenshot_10.png}
+        \label{fig:a1}
+        \caption{Señal Original, PAM Instantáneo y PCM.}
+\end{figure}
+
+Los resultados nos muestran como la tercera gráfica, la señal PCM, es muy similar a la señal original. En el gráfico se nota que la señal PCM reconstruida mantiene la forma general de la señal original, indicando una buena fidelidad en el proceso de conversión analógico-digital y su posterior reconstrucción. Luego se grafican las 3 señales en un mismo gráfico.
+
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=15cm]{Imagenes/Screenshot_7.png}
+        \label{fig:a1}
+        \caption{Señal Original (Rojo), PAM Instantáneo (Verde) y PCM (Azul).}
+\end{figure}
+
+Nuevamente se aprecia como la señal original m(t) y la señal producida de la modulación PCM son idénticas, mientras que la PAM no es fidedigna, ocasionando que los pulsos se salgan y difieran de la señal original. Esto se puede observar con mayor facilidad con ayuda de los graficos de los errores de cuantización.
+\begin{figure}[H]
+        \centering
+        \includegraphics[width=15cm]{Imagenes/Errores.png}
+        \label{fig:a1}
+        \caption{Errores.}
+\end{figure}
+
+\subsection{Preguntas 1}
+\begin{itemize}
+    \item  \textbf{a) ¿Qué relación hay entre el ciclo de trabajo y la transformada de Fourier de cada una de las señales (original, PAM natural y PAM instantánea)}
+    
+    La relación que hay entre el ciclo de trabajo y las transformadas de Fourier de la señal original, PAM natural y PAM instantánea es que el ciclo de trabajo influye directamente en la amplitud de los componentes espectrales de la señal PAM, y por ende afecta los valores de los ciclos de las transformadas de Fourier.
+
+    \item \textbf{b) ¿Qué relación hay entre la frecuencia de muestreo \textit{fs} y la transformada de Fourier (original, PAM natural y PAM instantánea)?}
+
+    La frecuencia de muestreo determina en las transformadas de Fourier la resolución espectral de estas.
+    
+\end{itemize}
+
+\subsection{Pregunta 2}
+\begin{itemize}
+    \item \textbf{¿El error por cuantificación depende de \textit{N}? Justifique modulando el valor de \textit{N} y comentando sus observaciones}
+
+    El error si depende del numero de bits de la palabra para PCM, para valores pequeños de \textit{N} la señal cuantificada tiene una precisión baja, y por ende un error de cuantificación grande, y para valores grandes de \textit{N} la precisión de la señal cuantificada aumenta y por ende el error disminuye.
+\end{itemize}
+\section{Conclusiones}
+Con el trabajo de la experiencia se evidencian los usos de las distintas modulaciones. La modulación PAM se utiliza para reducir la complejidad de señales analógicas de manera que se puedan enviar a través de un canal. Por otro lado, PCM convierte las señales analógicas en secuencias de bits digitales, con el beneficio de poder aplicar técnicas y métodos de detección y corrección de errores.
+
+\end{document}
